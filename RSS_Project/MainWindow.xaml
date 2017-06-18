@@ -24,7 +24,7 @@
             <TextBlock Margin="5, 6, 5, 5" Padding="5, 5, 5, 5" Text="hours"></TextBlock>
         </StackPanel>
         <TextBlock x:Name="tbNextRefreshAt" HorizontalAlignment="Right" Margin="0,5" Padding="5, 5, 5, 5" Text="next ↻:"/>
-        <ListBox Grid.Row="1"  x:Name="watchlistGui" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  >
+        <ListBox Grid.Row="1"  x:Name="watchlistGui" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFF1F1F1"  >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -32,10 +32,10 @@
                         <TextBlock Margin="5, 1, 5, 0" Text="last:" />
                         <TextBox  Text="{Binding backlogSize}" />
                         <TextBlock Margin="5, 0, 5, 0" Text="{Binding status}" />
-                        <TextBox  Text="{Binding title}" />
-                        <TextBox  Text="{Binding folder}" />
-                        <TextBox  Text="{Binding url}" />
-
+                        <Button   x:Name="btOpenFolderInExplorer" Content="📂" Click="btOpenFolderInExplorer_Click" Tag="{Binding url}"/>
+                        <TextBox  Margin="4,0,2,0" Text="{Binding title}" />
+                        <TextBox  Margin="2,0,2,0" Text="{Binding folder}" />
+                        <TextBox  Margin="2,0,4,0" Text="{Binding url}" />
                         <Button Padding="5,0,5,5"  x:Name="bt_removeFeed" Content="🗑" Click="bt_removeFeed_Click" Tag="{Binding url}" />
                     </StackPanel>
 

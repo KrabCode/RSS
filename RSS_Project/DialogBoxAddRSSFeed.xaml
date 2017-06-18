@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RSS"
         mc:Ignorable="d"
-        Title="Add RSS Feed" Height="151.587" Width="318.254">
+        Title="Add RSS Feed" Height="151.587" Width="318.254" WindowStartupLocation="CenterScreen">
     <Grid>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">    
             <StackPanel Orientation="Horizontal">

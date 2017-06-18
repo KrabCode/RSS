@@ -22,7 +22,7 @@ namespace RSS
         public DialogBoxAddRSSFeed()
         {
             InitializeComponent();
-            for (int i = 0; i < 51; i++)
+            for (int i = 0; i < 101; i++)
             {
                 cbBacklogSize.Items.Add(new TextBlock() { Text = "" + i, Tag = i });                
             }

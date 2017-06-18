@@ -74,6 +74,7 @@ namespace RSS
             }            
             watchlist = new Watchlist();
             recheckFrequencyInMS = loadRecheckFrequencyFromFile();
+            tbRecheckFrequency.Text = "" + recheckFrequencyInMS / 60 / 60 / 1000;
             setBinding();            
             resetTimer(); 
         }
@@ -98,6 +99,8 @@ namespace RSS
         private void btRecheck_Click(object sender, RoutedEventArgs e)
         {
             watchlist.refreshAllKnownFeeds();
+            refreshTime = DateTime.Now.AddMilliseconds(recheckFrequencyInMS);
+            tbNextRefreshAt.Text = "next ↻: " + refreshTime;
         }
 
         private void bt_removeFeed_Click(object sender, RoutedEventArgs e)
@@ -109,7 +112,7 @@ namespace RSS
         private void bt_refreshFeed_Click(object sender, RoutedEventArgs e)
         {
             Button btSender = (Button)sender;
-            watchlist.refreshRssFeed((string)btSender.Tag);
+            watchlist.refreshRssFeed((string)btSender.Tag);            
         }
 
         private void tbRecheckFrequency_TextChanged(object sender, TextChangedEventArgs e)
@@ -141,7 +144,7 @@ namespace RSS
             refreshTime = lastRefresh.AddMilliseconds(recheckFrequencyInMS);
             tbNextRefreshAt.Text = "next ↻: " + refreshTime;
 
-            timer.Interval = 1000*60; //timer ticks once every 1 minute
+            timer.Interval = 1000*60; //timer ticks once every minute
             timer.Stop();
             timer.Start();
         }
@@ -153,6 +156,7 @@ namespace RSS
             {
                 Application.Current.Dispatcher.Invoke(new Action(() => {
                     refreshTime = DateTime.Now.AddMilliseconds(recheckFrequencyInMS);
+                    tbNextRefreshAt.Text = "next ↻: " + refreshTime;
                     watchlist.refreshAllKnownFeeds();
                 }));
             }
@@ -201,6 +205,25 @@ namespace RSS
             string json = JsonConvert.SerializeObject(recheckFrequencyInMS, Formatting.Indented);
             File.WriteAllLines(_autoRefreshFrequencyFilepath, new String[] { json }, Encoding.UTF8);
             consoleOutput = "Settings saved to: " + Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RSS\\";
-        }        
-       }    
+        }
+
+        private void btOpenFolderInExplorer_Click(object sender, RoutedEventArgs e)
+        {
+            //📂
+            Button btSender = (Button)sender;
+            Process.Start(findFolderForUrl((string)btSender.Tag));
+        }
+
+        private string findFolderForUrl(string url)
+        {
+            foreach (WatchlistItem item in watchlist.MainWatchlist)
+            {
+                if(item.url == url)
+                {
+                    return item.folder;
+                }
+            }
+            return "C:\\";
+        }
+    }    
     }

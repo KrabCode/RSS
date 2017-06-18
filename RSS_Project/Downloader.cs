@@ -16,10 +16,19 @@ namespace RSS
 
         public RssFeed GetXml(string uri)
         {
-            XmlReader reader = XmlReader.Create(uri);
-            RssFeed feed = new RssFeed(new Uri(uri), uri);
-            feed.Load(reader);
-            return feed;
+            
+            try
+            {
+                XmlReader reader = XmlReader.Create(uri);
+                var feed = new RssFeed(new Uri(uri), uri);                
+                feed.Load(reader);
+                return feed;
+            }
+            catch (Exception e){
+                Console.WriteLine(e.StackTrace);                
+            }
+            return null;
+            
         }
 
         public void DownloadItemEnclosures(RssItem item, string folderPath, string filepath)
@@ -32,10 +41,7 @@ namespace RSS
                     new WebClient().DownloadFile(enclosure.Url, folderPath + "//" + filepath);
                 } catch (Exception e)
                 {
-                    Application.Current.Dispatcher.Invoke(new Action(() => {
-                        MainWindow window = (MainWindow)System.Windows.Application.Current.MainWindow;
-                        window.consoleOutput = e.Message + e.StackTrace;
-                    }));
+                    Console.WriteLine(e.StackTrace);
                 }
             }
         }
