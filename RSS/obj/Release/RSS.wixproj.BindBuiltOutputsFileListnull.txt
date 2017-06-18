@@ -1,3 +1,3 @@
-C:\Users\Jakub\documents\visual studio 2015\Projects\RSS_Project\RSS\bin\Release\cab1.cab
-C:\Users\Jakub\documents\visual studio 2015\Projects\RSS_Project\RSS\bin\Release\RSS.msi
-C:\Users\Jakub\documents\visual studio 2015\Projects\RSS_Project\RSS\bin\Release\RSS.wixpdb
+C:\Users\Jakub\Source\Repos\Rss\RSS\bin\Release\cab1.cab
+C:\Users\Jakub\Source\Repos\Rss\RSS\bin\Release\RSS.msi
+C:\Users\Jakub\Source\Repos\Rss\RSS\bin\Release\RSS.wixpdb

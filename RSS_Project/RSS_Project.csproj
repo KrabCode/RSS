@@ -37,6 +37,9 @@
   <PropertyGroup>
     <ApplicationIcon>__TemplateIcon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>RSS.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Argotic.Core">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Argotic\Microsoft .NET 3.5\Argotic.Core.dll</HintPath>
@@ -68,7 +71,6 @@
     </Compile>
     <Compile Include="Watchlist.cs" />
     <Compile Include="WatchlistItem.cs" />
-    <Compile Include="WatchlistRepresentation.cs" />
     <Page Include="DialogBoxAddRSSFeed.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

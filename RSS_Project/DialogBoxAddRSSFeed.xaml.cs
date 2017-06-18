@@ -22,6 +22,11 @@ namespace RSS
         public DialogBoxAddRSSFeed()
         {
             InitializeComponent();
+            for (int i = 0; i < 51; i++)
+            {
+                cbBacklogSize.Items.Add(new TextBlock() { Text = "" + i, Tag = i });                
+            }
+            cbBacklogSize.SelectedIndex = 25;
         }
        
         private void btValidateAndAddNewRssFeed_Click(object sender, RoutedEventArgs e)
@@ -34,7 +39,18 @@ namespace RSS
                 System.Windows.Forms.MessageBox.Show("TITLE ERROR:\nPlease specify title");
             } else {
                 MainWindow window = (MainWindow)System.Windows.Application.Current.MainWindow;
-                window.watchlist.addRssFeed(tbUrl.Text, tbTitle.Text, tbFolderPath.Text);
+                var tbSelectedBacklogSize = (TextBlock)cbBacklogSize.SelectedItem;
+                WatchlistItem item = new WatchlistItem()
+                {
+                    backlogSize = (int)tbSelectedBacklogSize.Tag,
+                    folder = tbFolderPath.Text,
+                    title = tbTitle.Text,
+                    url = tbUrl.Text,
+                    timestamp = DateTime.Now.ToString(),
+                    status = "new"
+                };
+                
+                window.watchlist.addRssFeed(item);
                 this.Close();
             }
         }

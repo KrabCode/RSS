@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -26,9 +27,13 @@ namespace RSS
     {
 
         private DateTime refreshTime;
-        private int recheckFrequency;
+        private int recheckFrequencyInMS;
 
-        private string _autoRefreshFrequencyFilepath = System.Reflection.Assembly.GetEntryAssembly().Location.Replace("RSS.exe", "") + "Refresh.txt";
+        private string _consoleOutput;
+        public string consoleOutput { get { return _consoleOutput; }
+            set { _consoleOutput = value; NotifyPropertyChanged("consoleOutput"); } }
+
+        private string _autoRefreshFrequencyFilepath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RSS\\" + "Refresh.txt";
 
         private Timer timer;
         public Watchlist watchlist;
@@ -37,6 +42,7 @@ namespace RSS
         {
             InitializeComponent();           
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged(string propertyName)
@@ -45,13 +51,20 @@ namespace RSS
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+            if(propertyName == "consoleOutput")
+            {
+                tbConsole.Text = consoleOutput;
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.ShowInTaskbar = false;
-            recheckFrequency = loadRecheckFrequencyFromFile();
-            watchlist = new Watchlist();            
+            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RSS"))
+            {
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RSS");
+            }
+            recheckFrequencyInMS = loadRecheckFrequencyFromFile();
+            watchlist = new Watchlist();
             setBinding();            
             resetTimer(); 
         }
@@ -60,16 +73,18 @@ namespace RSS
         {
             Binding watchlistBind = new Binding();
             watchlistBind.Source = watchlist;
-            watchlistBind.Path = new PropertyPath("Settings");
+            watchlistBind.Path = new PropertyPath("MainWatchlist");
             watchlistBind.Mode = BindingMode.TwoWay;
             watchlistGui.SetBinding(ItemsControl.ItemsSourceProperty, watchlistBind);
-            tbRecheckFrequency.Text = (recheckFrequency/60/60/1000) + "";
+            tbRecheckFrequency.Text = (recheckFrequencyInMS/60/60/1000) + "";
         }
+        
+        
 
         private void btAdd_Click(object sender, RoutedEventArgs e)
         {
             DialogBoxAddRSSFeed dialogBox = new DialogBoxAddRSSFeed();
-            dialogBox.ShowDialog();
+            dialogBox.ShowDialog();            
         }
 
         private void btRecheck_Click(object sender, RoutedEventArgs e)
@@ -95,13 +110,13 @@ namespace RSS
             {
                 try
                 {
-                    recheckFrequency = Convert.ToInt32(tbRecheckFrequency.Text) * 60 * 60 * 1000;
+                    recheckFrequencyInMS = Convert.ToInt32(tbRecheckFrequency.Text) * 60 * 60 * 1000;
                     saveRecheckFrequencyToFile();
                     resetTimer();
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    consoleOutput = ex.Message;
                 }
             }
         }
@@ -114,47 +129,48 @@ namespace RSS
                 timer.Dispose();
             }
             DateTime lastRefresh = findEarliestRefreshDateTime();            
-            refreshTime = lastRefresh.AddMilliseconds(recheckFrequency);
-            tbNextRefreshAt.Text = "next refresh at: " + refreshTime;
+            refreshTime = lastRefresh.AddMilliseconds(recheckFrequencyInMS);
+            tbNextRefreshAt.Text = "next ↻: " + refreshTime;
             timer = new Timer();
-            //timer.Interval = 1000 * 60 * 15; //once every 15 minutes
-            timer.Interval = 1000;
+            timer.Interval = 1000 * 60 * 15; //once every 15 minutes
+            //timer.Interval = 1000;
             timer.Elapsed += Timer_Elapsed;
             timer.Start();
             
-        }
-        
-        private DateTime findEarliestRefreshDateTime()
-        {
-            DateTime earliestDateTime = DateTime.Now;
-            foreach(var rssSetting in watchlist.Settings)
-            {
-                try
-                {
-                    DateTime lastUpdate = DateTime.Parse(rssSetting.Timestamp);
-                    if (earliestDateTime > lastUpdate)
-                    {
-                        earliestDateTime = lastUpdate;
-                    }
-                }
-                catch(Exception ex) {
-                    Console.WriteLine(ex.Message);
-                }
-                
-            }
-            return earliestDateTime;
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             if (DateTime.Now > refreshTime)
             {
-                Console.WriteLine("Refreshing all known feeds");
+                consoleOutput = "Refreshing all known feeds";
                 refreshTime = DateTime.Now.AddMilliseconds(loadRecheckFrequencyFromFile());
                 watchlist.refreshAllKnownFeeds();
-                //TODO figure out the timers.
             }
         }
+
+        private DateTime findEarliestRefreshDateTime()
+        {
+            DateTime earliestDateTime = DateTime.Now;
+            foreach(var rssSetting in watchlist.MainWatchlist)
+            {
+                try
+                {
+                    DateTime lastUpdate = DateTime.Parse(rssSetting.timestamp);
+                    if (earliestDateTime > lastUpdate)
+                    {
+                        earliestDateTime = lastUpdate;
+                    }
+                }
+                catch(Exception ex) {
+                    consoleOutput = ex.Message;
+                }
+                
+            }
+            return earliestDateTime;
+        }
+
+        
 
         private int loadRecheckFrequencyFromFile()
         {
@@ -171,8 +187,9 @@ namespace RSS
 
         private void saveRecheckFrequencyToFile()
         {
-            string json = JsonConvert.SerializeObject(recheckFrequency, Formatting.Indented);
+            string json = JsonConvert.SerializeObject(recheckFrequencyInMS, Formatting.Indented);
             File.WriteAllLines(_autoRefreshFrequencyFilepath, new String[] { json }, Encoding.UTF8);
+            consoleOutput = "Settings saved to: " + Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RSS\\";
         }        
+       }    
     }
-}

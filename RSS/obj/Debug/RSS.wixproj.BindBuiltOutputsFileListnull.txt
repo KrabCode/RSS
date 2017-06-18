@@ -1,0 +1,3 @@
+C:\Users\Jakub\Source\Repos\Rss\RSS\bin\Debug\cab1.cab
+C:\Users\Jakub\Source\Repos\Rss\RSS\bin\Debug\RSS.msi
+C:\Users\Jakub\Source\Repos\Rss\RSS\bin\Debug\RSS.wixpdb

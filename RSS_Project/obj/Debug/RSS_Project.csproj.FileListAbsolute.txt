@@ -22,3 +22,26 @@ c:\users\jakub\documents\visual studio 2015\Projects\RSS_Project\RSS_Project\obj
 c:\users\jakub\documents\visual studio 2015\Projects\RSS_Project\RSS_Project\obj\Debug\RSS.g.resources
 c:\users\jakub\documents\visual studio 2015\Projects\RSS_Project\RSS_Project\obj\Debug\RSS.Properties.Resources.resources
 c:\users\jakub\documents\visual studio 2015\Projects\RSS_Project\RSS_Project\obj\Debug\RSS_Project.csproj.GenerateResource.Cache
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\bin\Debug\RSS.exe.config
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Debug\RSS.exe
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Debug\RSS.pdb
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\bin\Debug\RSS.exe
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\bin\Debug\RSS.pdb
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\bin\Debug\Argotic.Core.dll
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\bin\Debug\Argotic.Extensions.dll
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\bin\Debug\Argotic.Common.dll
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\bin\Debug\Argotic.Core.xml
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\bin\Debug\Argotic.Extensions.xml
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\bin\Debug\Argotic.Common.xml
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Debug\DialogBoxAddRSSFeed.g.cs
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Debug\MainWindow.g.cs
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Debug\App.g.cs
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Debug\RSS_MarkupCompile.cache
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Debug\RSS_MarkupCompile.lref
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Debug\DialogBoxAddRSSFeed.baml
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Debug\MainWindow.baml
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Debug\RSS.g.resources
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Debug\RSS.Properties.Resources.resources
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Debug\RSS_Project.csproj.GenerateResource.Cache

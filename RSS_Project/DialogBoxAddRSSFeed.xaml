@@ -19,7 +19,11 @@
             <StackPanel Orientation="Horizontal"  >
                 <Button x:Name="btOpenFolderDialog" Content="Folder... " Click="btOpenFolderDialog_Click"></Button>
                 <TextBox x:Name="tbFolderPath" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="" Width="500"></TextBox>
-            </StackPanel>           
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="How far back?"></TextBlock>                
+            </StackPanel>
+            <ComboBox x:Name="cbBacklogSize"/>
         </StackPanel>
         <Button Content="Add" x:Name="btValidateAndAddNewRssFeed" VerticalAlignment="Bottom" Click="btValidateAndAddNewRssFeed_Click"/>
     </Grid>

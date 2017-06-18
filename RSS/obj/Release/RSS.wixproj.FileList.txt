@@ -5,3 +5,6 @@ obj\Release\Product.wixobj
 obj\Release\RSS.wixproj.BindContentsFileListnull.txt
 obj\Release\RSS.wixproj.BindOutputsFileListnull.txt
 obj\Release\RSS.wixproj.BindBuiltOutputsFileListnull.txt
+C:\Users\Jakub\Source\Repos\Rss\RSS\bin\Release\cab1.cab
+C:\Users\Jakub\Source\Repos\Rss\RSS\bin\Release\RSS.msi
+C:\Users\Jakub\Source\Repos\Rss\RSS\bin\Release\RSS.wixpdb

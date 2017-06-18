@@ -7,40 +7,62 @@ using Newtonsoft.Json;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RSS
 {
     public class Watchlist 
     {
-        private string _watchlistFilePath = System.Reflection.Assembly.GetEntryAssembly().Location.Replace("RSS.exe", "") + "Settings.txt";
+        private string _watchlistFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RSS\\" + "Settings.txt";
         private Downloader dl = new Downloader();
         //Viewmodel for the watchlistGui listview
-        public ObservableCollection<WatchlistItem> Settings {get;set;}
-            
+        public ObservableCollection<WatchlistItem> MainWatchlist {get;set;}
+        BackgroundWorker bw = new BackgroundWorker();
+        List<string> downloadQueue = new List<string>();
+
         public Watchlist()
         {
-            Settings = loadSettings();
+            MainWatchlist = loadSettings();
             bw.DoWork += new DoWorkEventHandler(bw_DoWork);
             bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
+            MainWindow window = (MainWindow)System.Windows.Application.Current.MainWindow;
+            window.consoleOutput = "Settings stored at: " + Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RSS";
         }
 
-        
-
-        public void addRssFeed(string url, string title, string folderPath)
+        public void addRssFeed(WatchlistItem item)
         {
-            WatchlistItem item = new WatchlistItem();
-            item.folder = folderPath;
-            item.url = url;
-            item.title = title;    
-            Settings.Add(item);
-            saveSettings();
-            refreshRssFeed(url);
+            if (!doesWatchlistContainUrl(item.url))
+            {
+                item.PropertyChanged += Item_PropertyChanged;
+                MainWatchlist.Add(item);                
+                saveSettings();
+                refreshRssFeed(item.url);                
+            }
+            else
+            {
+                MainWindow window = (MainWindow)System.Windows.Application.Current.MainWindow;
+                window.consoleOutput = "RSS address already in use!";
+            }
+            
+        }
+
+        private bool doesWatchlistContainUrl(string url)
+        {
+            bool result = false;
+            foreach(WatchlistItem item in MainWatchlist)
+            {
+                if(item.url == url)
+                {
+                    result = true;
+                }
+            }
+            return result;
         }
 
         public void removeRssFeed(string url)
         {
             WatchlistItem itemToRemove = null;
-            foreach(WatchlistItem item in Settings)
+            foreach(WatchlistItem item in MainWatchlist)
             {
                 if(item.url == url)
                 {
@@ -50,14 +72,17 @@ namespace RSS
             }
             if (itemToRemove != null)
             {
-                Settings.Remove(itemToRemove);
+                MainWindow window = (MainWindow)System.Windows.Application.Current.MainWindow;
+                window.consoleOutput = "Removed feed: " + itemToRemove.title + " with url: " + itemToRemove.url;
+                MainWatchlist.Remove(itemToRemove);
+                saveSettings();
             }
-            saveSettings();
+            
         }
 
         private void saveSettings()
         {
-            string json = JsonConvert.SerializeObject(Settings,Formatting.Indented);
+            string json = JsonConvert.SerializeObject(MainWatchlist,Formatting.Indented);
             File.WriteAllLines(_watchlistFilePath, new String[] { json }, Encoding.UTF8);
         }
 
@@ -82,19 +107,19 @@ namespace RSS
         private void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             saveSettings();
-            //TODO make this work
         }
 
         public void refreshAllKnownFeeds()
         {
-            foreach (var rssSettings in Settings)
+            foreach (var rssSettings in MainWatchlist)
                 try
                 {
                     refreshRssFeed(rssSettings.url);
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message + e.StackTrace);
+                    MainWindow window = (MainWindow)System.Windows.Application.Current.MainWindow;
+                    window.consoleOutput = e.Message;
                 }
         }
 
@@ -102,6 +127,8 @@ namespace RSS
         {
             if (bw.IsBusy != true)
             {
+                MainWindow window = (MainWindow)System.Windows.Application.Current.MainWindow;
+                window.consoleOutput = "Downloading from: "+ url;
                 bw.RunWorkerAsync(url);
             }
             else
@@ -117,10 +144,18 @@ namespace RSS
                 downloadQueue.Remove(item);
                 bw.RunWorkerAsync(item);
             }
+            else
+            {
+                bw_sayGoodbye();
+            }
         }
 
-        BackgroundWorker bw = new BackgroundWorker();
-        List<string> downloadQueue = new List<string>();
+        private void bw_sayGoodbye()
+        {
+            MainWindow window = (MainWindow)System.Windows.Application.Current.MainWindow;
+            window.consoleOutput = "Downloads finished";
+        }
+
         private void bw_DoWork(object sender, DoWorkEventArgs e)
         {
             downloadRssFeed(Convert.ToString(e.Argument));
@@ -131,13 +166,13 @@ namespace RSS
         {
             WatchlistItem rssSettings = null;
             bool rssSettingsFound = false;
-            foreach (WatchlistItem item in Settings)
+            foreach (WatchlistItem item in MainWatchlist)
             {
                 if (item.url == url)
                 {
                     rssSettings = item;
-                    rssSettings.Status = "downloading...";
-                    rssSettings.Timestamp = DateTime.Now.ToLocalTime().ToString();
+                    rssSettings.status = "downloading...";
+                    rssSettings.timestamp = DateTime.Now.ToLocalTime().ToString();
                     rssSettingsFound = true;
                     break;
                 }
@@ -145,25 +180,30 @@ namespace RSS
             if (rssSettingsFound)
             {
                 var newFeed = dl.GetXml(url);
-
                 if (newFeed != null)
                 {
+                    int intendedBacklogSize = rssSettings.backlogSize;
+                    int index = 0;
                     foreach (var item in newFeed.Channel.Items)
                     {
                         foreach (var enclosureItem in item.Enclosures)
                         {
                             string filename = dl.getFilenameFromFileUrl(enclosureItem.Url.ToString());
-                            if (!File.Exists(rssSettings.folder + "//" + filename) && Settings.Contains(rssSettings))
+                            if (!File.Exists(rssSettings.folder + "//" + filename) && MainWatchlist.Contains(rssSettings))
                             {
-
                                 dl.DownloadItemEnclosures(item, rssSettings.folder, filename);
                             }
                         }
+                        if(index++ > intendedBacklogSize)
+                        {
+                            break;
+                        }
                     }
-                    rssSettings.Status = "up to date";
+                    rssSettings.status = "up to date";
                 }
             }
-
         }
     }
+
+
 }

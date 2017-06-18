@@ -1,0 +1,6 @@
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\bin\Debug\Argotic.Common.dll
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\bin\Debug\Argotic.Core.dll
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\bin\Debug\Argotic.Extensions.dll
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\bin\Debug\RSS.exe
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\bin\Debug\RSS.exe.config

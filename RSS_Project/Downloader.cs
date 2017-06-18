@@ -26,7 +26,6 @@ namespace RSS
             Directory.CreateDirectory(folderPath);
             foreach (var enclosure in item.Enclosures)
             {
-                Console.WriteLine("downloading the following file: " + enclosure.Url.ToString() + " to: " + folderPath);
                 try
                 {
                     new WebClient().DownloadFile(enclosure.Url, folderPath + "//" + filepath);

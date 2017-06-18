@@ -3,8 +3,8 @@
     "url": "http://www2.rozhlas.cz/podcast/podcast_porady.php?p_po=101033",
     "folder": "C:\\Users\\Jakub\\Desktop\\Historie+++\\rss_test\\historie",
     "title": "Historie +",
-    "Status": "up to date",
-    "Timestamp": "17. 6. 2017 23:47:39"
+    "Status": "downloading...",
+    "Timestamp": "18. 6. 2017 8:19:55"
   },
   {
     "url": "http://www2.rozhlas.cz/podcast/podcast_porady.php?p_po=101654",
