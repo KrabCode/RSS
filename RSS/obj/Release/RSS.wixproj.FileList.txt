@@ -1,0 +1,7 @@
+c:\users\jakub\documents\visual studio 2015\Projects\RSS_Project\RSS\bin\Release\cab1.cab
+c:\users\jakub\documents\visual studio 2015\Projects\RSS_Project\RSS\bin\Release\RSS.msi
+c:\users\jakub\documents\visual studio 2015\Projects\RSS_Project\RSS\bin\Release\RSS.wixpdb
+obj\Release\Product.wixobj
+obj\Release\RSS.wixproj.BindContentsFileListnull.txt
+obj\Release\RSS.wixproj.BindOutputsFileListnull.txt
+obj\Release\RSS.wixproj.BindBuiltOutputsFileListnull.txt

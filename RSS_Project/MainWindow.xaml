@@ -1,0 +1,42 @@
+﻿<Window x:Class="RSS.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RSS"
+        mc:Ignorable="d"
+        Title="RSS" Height="350" Width="800" Loaded="Window_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" FlowDirection="LeftToRight"   HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Button x:Name="btAdd" Content="Add new" Margin="5, 5, 0, 5" Padding="5, 5, 5, 5" Click="btAdd_Click"/>
+            <Button x:Name="btRecheck" Content="Refresh all" Margin="5, 5, 0, 5" Padding="5, 5, 5, 5" Click="btRecheck_Click"/>
+            <TextBlock Margin="5, 5, 5, 5" Padding="5, 5, 5, 5" Text="automatic refresh every"></TextBlock>
+            <TextBox x:Name="tbRecheckFrequency"  VerticalAlignment="Center" TextChanged="tbRecheckFrequency_TextChanged"></TextBox>
+            <TextBlock Margin="5, 5, 0, 5" Padding="5, 5, 5, 5" Text="hours"></TextBlock>
+        </StackPanel>
+        <TextBlock x:Name="tbNextRefreshAt" HorizontalAlignment="Right" Margin="0,5" Padding="5, 5, 5, 5" Text="next refresh at:"/>
+        <ListBox Grid.Row="1"  x:Name="watchlistGui" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="4,4,4,4" Text="{Binding Status}" />
+                        <Button x:Name="bt_refreshFeed" Margin="4,4,4,4" Content="Refresh" Click="bt_refreshFeed_Click" Tag="{Binding url}"/>
+                        <TextBlock Margin="4,4,4,4" Text="{Binding title}" />
+                        <TextBox Margin="4,4,4,4" Text="{Binding folder}" />
+                        <TextBox Margin="4,4,4,4" Text="{Binding url}" />
+                        <Button x:Name="bt_removeFeed" Margin="4,4,4,4" Content="Remove" Click="bt_removeFeed_Click" Tag="{Binding url}" />
+                    </StackPanel>
+
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>

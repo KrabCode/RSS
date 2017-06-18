@@ -1,0 +1,26 @@
+﻿<Window x:Class="RSS.DialogBoxAddRSSFeed"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RSS"
+        mc:Ignorable="d"
+        Title="Add RSS Feed" Height="151.587" Width="318.254">
+    <Grid>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">    
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Title: "></TextBlock>
+                <TextBox x:Name="tbTitle" VerticalAlignment="Stretch" HorizontalAlignment="Right" Text="" Width="500" ></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="URL: "></TextBlock>
+                <TextBox x:Name="tbUrl" VerticalAlignment="Stretch" HorizontalAlignment="Right" Text="" Width="500" ></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"  >
+                <Button x:Name="btOpenFolderDialog" Content="Folder... " Click="btOpenFolderDialog_Click"></Button>
+                <TextBox x:Name="tbFolderPath" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="" Width="500"></TextBox>
+            </StackPanel>           
+        </StackPanel>
+        <Button Content="Add" x:Name="btValidateAndAddNewRssFeed" VerticalAlignment="Bottom" Click="btValidateAndAddNewRssFeed_Click"/>
+    </Grid>
+</Window>

@@ -1,0 +1,6 @@
+C:\Users\Jakub\documents\visual studio 2015\Projects\RSS_Project\RSS_Project\bin\Release\Argotic.Common.dll
+C:\Users\Jakub\documents\visual studio 2015\Projects\RSS_Project\RSS_Project\bin\Release\Argotic.Core.dll
+C:\Users\Jakub\documents\visual studio 2015\Projects\RSS_Project\RSS_Project\bin\Release\Argotic.Extensions.dll
+C:\Users\Jakub\documents\visual studio 2015\Projects\RSS_Project\RSS_Project\bin\Release\Newtonsoft.Json.dll
+C:\Users\Jakub\documents\visual studio 2015\Projects\RSS_Project\RSS_Project\bin\Release\RSS.exe
+C:\Users\Jakub\documents\visual studio 2015\Projects\RSS_Project\RSS_Project\bin\Release\RSS.exe.config

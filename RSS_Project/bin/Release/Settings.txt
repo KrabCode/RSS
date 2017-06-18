@@ -1,0 +1,23 @@
+﻿[
+  {
+    "url": "http://www2.rozhlas.cz/podcast/podcast_porady.php?p_po=101033",
+    "folder": "C:\\Users\\Jakub\\Desktop\\Historie+++\\rss_test\\historie",
+    "title": "Historie +",
+    "Status": "up to date",
+    "Timestamp": "17. 6. 2017 23:47:39"
+  },
+  {
+    "url": "http://www2.rozhlas.cz/podcast/podcast_porady.php?p_po=101654",
+    "folder": "C:\\Users\\Jakub\\Desktop\\Podcasts\\dnesni+",
+    "title": "Dnesni +",
+    "Status": "up to date",
+    "Timestamp": "17. 6. 2017 23:47:39"
+  },
+  {
+    "url": "http://www2.rozhlas.cz/podcast/podcast_porady.php?p_po=101024",
+    "folder": "C:\\Users\\Jakub\\Desktop\\Historie+++\\rss_test\\svet1 20",
+    "title": "Svet ve 20 milisekundach",
+    "Status": "up to date",
+    "Timestamp": "17. 6. 2017 23:47:40"
+  }
+]

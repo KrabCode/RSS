@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"><?define RSS_Project_TargetDir=$(var.RSS_Project.TargetDir)?>
+	<Product Id="*" Name="RSS" Language="1033" Version="1.0.0.0" Manufacturer="Jakub Rak 2017" UpgradeCode="36371f78-8f70-4d2e-992c-fbca43310d83">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="RSS" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="RSS" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			<!-- <Component Id="ProductComponent"> -->
+				<!-- TODO: Insert files, registry keys, and other resources here. -->
+			<!-- </Component> -->
+			<Component Id="RSS.exe" Guid="997b932e-21cc-4301-b0cb-3e4d2922cede">
+			  <File Id="RSS.exe" Name="RSS.exe" Source="$(var.RSS_Project_TargetDir)RSS.exe" />
+			</Component>
+			<Component Id="RSS.exe.config" Guid="534cdd55-f016-4f72-857b-6a8f2270312c">
+			  <File Id="RSS.exe.config" Name="RSS.exe.config" Source="$(var.RSS_Project_TargetDir)RSS.exe.config" />
+			</Component>
+			<Component Id="Argotic.Core.dll" Guid="e79fd50a-7a47-4c6b-9ccd-f0e306c0d425">
+			  <File Id="Argotic.Core.dll" Name="Argotic.Core.dll" Source="$(var.RSS_Project_TargetDir)Argotic.Core.dll" />
+			</Component>
+			<Component Id="Newtonsoft.Json.dll" Guid="39f1186c-9efe-4290-9f08-2c001810f0c5">
+			  <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.RSS_Project_TargetDir)Newtonsoft.Json.dll" />
+			</Component>
+			<Component Id="Argotic.Extensions.dll" Guid="3ec0e261-e2ab-45d0-9b3e-afe4a1be0fdc">
+			  <File Id="Argotic.Extensions.dll" Name="Argotic.Extensions.dll" Source="$(var.RSS_Project_TargetDir)Argotic.Extensions.dll" />
+			</Component>
+			<Component Id="Argotic.Common.dll" Guid="33706497-638c-4eea-b4b9-aeeaa0d314ed">
+			  <File Id="Argotic.Common.dll" Name="Argotic.Common.dll" Source="$(var.RSS_Project_TargetDir)Argotic.Common.dll" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>
