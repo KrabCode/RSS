@@ -45,3 +45,4 @@ C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Debug\MainWindow.baml
 C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Debug\RSS.g.resources
 C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Debug\RSS.Properties.Resources.resources
 C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Debug\RSS_Project.csproj.GenerateResource.Cache
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Debug\App.baml

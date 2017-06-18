@@ -171,8 +171,6 @@ namespace RSS
                 if (item.url == url)
                 {
                     rssSettings = item;
-                    rssSettings.status = "downloading...";
-                    rssSettings.timestamp = DateTime.Now.ToLocalTime().ToString();
                     rssSettingsFound = true;
                     break;
                 }
@@ -182,19 +180,22 @@ namespace RSS
                 var newFeed = dl.GetXml(url);
                 if (newFeed != null)
                 {
-                    int intendedBacklogSize = rssSettings.backlogSize;
+                    rssSettings.status = "downloading...";
+                    rssSettings.timestamp = DateTime.Now.ToLocalTime().ToString();
                     int index = 0;
                     foreach (var item in newFeed.Channel.Items)
                     {
                         foreach (var enclosureItem in item.Enclosures)
                         {
-                            string filename = dl.getFilenameFromFileUrl(enclosureItem.Url.ToString());
+                            string filename = getFilenameFromFileUrl(enclosureItem.Url.ToString());
+                            string fileUrl = getUrlFromEnclosure(enclosureItem);
+                            Console.WriteLine(filename);
                             if (!File.Exists(rssSettings.folder + "//" + filename) && MainWatchlist.Contains(rssSettings))
                             {
-                                dl.DownloadItemEnclosures(item, rssSettings.folder, filename);
+                                dl.DownloadEnclosureFiles(fileUrl, rssSettings.folder, filename, item);
                             }
                         }
-                        if(index++ > intendedBacklogSize)
+                        if(index++ > rssSettings.backlogSize)
                         {
                             break;
                         }
@@ -202,6 +203,17 @@ namespace RSS
                     rssSettings.status = "up to date";
                 }
             }
+        }
+
+        private string getUrlFromEnclosure(Argotic.Syndication.RssEnclosure item)
+        {
+            return item.Url.ToString().Split('?')[0];
+        }
+
+        public string getFilenameFromFileUrl(string url)
+        {
+            string[] split = url.Split('/');            
+            return split[split.Length - 1].Split('?')[0];
         }
     }
 

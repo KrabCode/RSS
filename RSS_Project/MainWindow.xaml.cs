@@ -25,21 +25,15 @@ namespace RSS
     /// </summary>
     public partial class MainWindow : Window , INotifyPropertyChanged
     {
-        private DateTime refreshTime;
+        
         private int _rf;
-        private int recheckFrequencyInMS { get { return _rf; }
-            set { _rf = value;
-                NotifyPropertyChanged("recheckFrequencyInMS");
-            }
-        }
+        private int recheckFrequencyInMS { get { return _rf; } set { _rf = value; NotifyPropertyChanged("recheckFrequencyInMS"); } }
         
 
         private string _consoleOutput;
-        public string consoleOutput { get { return _consoleOutput; }
-            set { _consoleOutput = value; NotifyPropertyChanged("consoleOutput"); } }
-
+        public string consoleOutput { get { return _consoleOutput; } set { _consoleOutput = value; NotifyPropertyChanged("consoleOutput"); } }
         private string _autoRefreshFrequencyFilepath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RSS\\" + "Refresh.txt";
-
+        private DateTime refreshTime;
         private Timer timer;
         public Watchlist watchlist;
 

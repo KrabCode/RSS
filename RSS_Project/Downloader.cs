@@ -16,7 +16,6 @@ namespace RSS
 
         public RssFeed GetXml(string uri)
         {
-            
             try
             {
                 XmlReader reader = XmlReader.Create(uri);
@@ -30,27 +29,28 @@ namespace RSS
             return null;
             
         }
+        
 
-        public void DownloadItemEnclosures(RssItem item, string folderPath, string filepath)
+        internal void DownloadEnclosureFiles(string url, string folderPath, string filepath, RssItem item)
         {
-            Directory.CreateDirectory(folderPath);
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+            WebClient client = new WebClient();
             foreach (var enclosure in item.Enclosures)
             {
                 try
                 {
-                    new WebClient().DownloadFile(enclosure.Url, folderPath + "//" + filepath);
-                } catch (Exception e)
+                    client.DownloadFile(enclosure.Url, folderPath + "//" + filepath);
+                }
+                catch (Exception e)
                 {
-                    Console.WriteLine(e.StackTrace);
+                    Console.WriteLine(e.Message + e.StackTrace);
                 }
             }
+            client.Dispose();
         }
-
-        public string getFilenameFromFileUrl(string url)
-        {
-            string[] split = url.Split('/');
-            return split[split.Length - 1];
-        }        
     }
 }
 
