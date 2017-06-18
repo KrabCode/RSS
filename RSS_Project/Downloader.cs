@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Xml;
 using System.ComponentModel;
+using System.Windows;
 
 namespace RSS
 {
@@ -31,7 +32,10 @@ namespace RSS
                     new WebClient().DownloadFile(enclosure.Url, folderPath + "//" + filepath);
                 } catch (Exception e)
                 {
-                    Console.WriteLine(e.Message + e.StackTrace);
+                    Application.Current.Dispatcher.Invoke(new Action(() => {
+                        MainWindow window = (MainWindow)System.Windows.Application.Current.MainWindow;
+                        window.consoleOutput = e.Message + e.StackTrace;
+                    }));
                 }
             }
         }

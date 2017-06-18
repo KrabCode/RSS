@@ -32,7 +32,6 @@
                         <TextBlock Margin="5, 1, 5, 0" Text="last:" />
                         <TextBox  Text="{Binding backlogSize}" />
                         <TextBlock Margin="5, 0, 5, 0" Text="{Binding status}" />
-
                         <TextBox  Text="{Binding title}" />
                         <TextBox  Text="{Binding folder}" />
                         <TextBox  Text="{Binding url}" />

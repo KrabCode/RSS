@@ -25,9 +25,14 @@ namespace RSS
     /// </summary>
     public partial class MainWindow : Window , INotifyPropertyChanged
     {
-
         private DateTime refreshTime;
-        private int recheckFrequencyInMS;
+        private int _rf;
+        private int recheckFrequencyInMS { get { return _rf; }
+            set { _rf = value;
+                NotifyPropertyChanged("recheckFrequencyInMS");
+            }
+        }
+        
 
         private string _consoleOutput;
         public string consoleOutput { get { return _consoleOutput; }
@@ -55,6 +60,10 @@ namespace RSS
             {
                 tbConsole.Text = consoleOutput;
             }
+            if(propertyName == "recheckFrequencyInMS")
+            {
+                
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -62,9 +71,9 @@ namespace RSS
             if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RSS"))
             {
                 Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RSS");
-            }
-            recheckFrequencyInMS = loadRecheckFrequencyFromFile();
+            }            
             watchlist = new Watchlist();
+            recheckFrequencyInMS = loadRecheckFrequencyFromFile();
             setBinding();            
             resetTimer(); 
         }
@@ -75,8 +84,7 @@ namespace RSS
             watchlistBind.Source = watchlist;
             watchlistBind.Path = new PropertyPath("MainWatchlist");
             watchlistBind.Mode = BindingMode.TwoWay;
-            watchlistGui.SetBinding(ItemsControl.ItemsSourceProperty, watchlistBind);
-            tbRecheckFrequency.Text = (recheckFrequencyInMS/60/60/1000) + "";
+            watchlistGui.SetBinding(ItemsControl.ItemsSourceProperty, watchlistBind);            
         }
         
         
@@ -123,31 +131,34 @@ namespace RSS
 
         private void resetTimer()
         {
-            if(timer != null)
+            
+            if (timer == null)
             {
-                timer.Stop();
-                timer.Dispose();
+                timer = new Timer();
+                timer.Elapsed += Timer_Elapsed;
             }
-            DateTime lastRefresh = findEarliestRefreshDateTime();            
+            DateTime lastRefresh = findEarliestRefreshDateTime();
             refreshTime = lastRefresh.AddMilliseconds(recheckFrequencyInMS);
             tbNextRefreshAt.Text = "next ↻: " + refreshTime;
-            timer = new Timer();
-            timer.Interval = 1000 * 60 * 15; //once every 15 minutes
-            //timer.Interval = 1000;
-            timer.Elapsed += Timer_Elapsed;
+
+            timer.Interval = 1000*60; //timer ticks once every 1 minute
+            timer.Stop();
             timer.Start();
-            
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (DateTime.Now > refreshTime)
+            DateTime thisMoment = DateTime.Now.ToLocalTime();
+            if (thisMoment > refreshTime)
             {
-                consoleOutput = "Refreshing all known feeds";
-                refreshTime = DateTime.Now.AddMilliseconds(loadRecheckFrequencyFromFile());
-                watchlist.refreshAllKnownFeeds();
+                Application.Current.Dispatcher.Invoke(new Action(() => {
+                    refreshTime = DateTime.Now.AddMilliseconds(recheckFrequencyInMS);
+                    watchlist.refreshAllKnownFeeds();
+                }));
             }
         }
+
+        
 
         private DateTime findEarliestRefreshDateTime()
         {

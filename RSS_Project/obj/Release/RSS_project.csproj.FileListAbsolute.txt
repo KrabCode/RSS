@@ -69,3 +69,4 @@ C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Release\MainWindow.baml
 C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Release\RSS.g.resources
 C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Release\RSS.Properties.Resources.resources
 C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Release\RSS_Project.csproj.GenerateResource.Cache
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Release\App.baml

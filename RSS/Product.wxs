@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"><?define RSS_Project_TargetDir=$(var.RSS_Project.TargetDir)?>
-	<Product Id="*" Name="RSS" Language="1033" Version="1.0.0.0" Manufacturer="Jakub Rak 2017" UpgradeCode="36371f78-8f70-4d2e-992c-fbca43310d83">
+	<Product Id="*" Name="RSS" Language="1033" Version="1.0.0.0" Manufacturer="Jakub Rak" UpgradeCode="36371f78-8f70-4d2e-992c-fbca43310d83">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
