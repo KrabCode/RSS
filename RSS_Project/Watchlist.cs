@@ -165,17 +165,15 @@ namespace RSS
         private void downloadRssFeed(string url)
         {
             WatchlistItem rssSettings = null;
-            bool rssSettingsFound = false;
             foreach (WatchlistItem item in MainWatchlist)
             {
                 if (item.url == url)
                 {
                     rssSettings = item;
-                    rssSettingsFound = true;
                     break;
                 }
             }
-            if (rssSettingsFound)
+            if (rssSettings!=null)
             {
                 var newFeed = dl.GetXml(url);
                 if (newFeed != null)

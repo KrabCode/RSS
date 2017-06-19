@@ -28,11 +28,9 @@ namespace RSS
         
         private int _rf;
         private int recheckFrequencyInMS { get { return _rf; } set { _rf = value; NotifyPropertyChanged("recheckFrequencyInMS"); } }
-        
-
         private string _consoleOutput;
         public string consoleOutput { get { return _consoleOutput; } set { _consoleOutput = value; NotifyPropertyChanged("consoleOutput"); } }
-        private string _autoRefreshFrequencyFilepath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RSS\\" + "Refresh.txt";
+        private string _autoRefreshFrequencyFilepath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RSS" + "\\Refresh.txt";
         private DateTime refreshTime;
         private Timer timer;
         public Watchlist watchlist;
@@ -205,7 +203,13 @@ namespace RSS
         {
             //📂
             Button btSender = (Button)sender;
-            Process.Start(findFolderForUrl((string)btSender.Tag));
+            string folderPath = findFolderForUrl((string)btSender.Tag);
+            if(folderPath != null && Directory.Exists(folderPath))
+            {
+                Process.Start(folderPath);
+            }else{
+                MessageBox.Show("Error opening folder:\n" + folderPath  + "\nFolder does not exist.");
+            }
         }
 
         private string findFolderForUrl(string url)
@@ -217,7 +221,7 @@ namespace RSS
                     return item.folder;
                 }
             }
-            return "C:\\";
+            return null;
         }
     }    
-    }
+}

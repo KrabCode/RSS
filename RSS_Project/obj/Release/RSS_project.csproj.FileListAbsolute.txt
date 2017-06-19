@@ -69,3 +69,4 @@ C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Release\RSS.Properties.Resources
 C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Release\RSS_Project.csproj.GenerateResource.Cache
 C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Release\RSS.exe
 C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Release\RSS.pdb
+C:\Users\Jakub\Source\Repos\Rss\RSS_Project\obj\Release\RSS_Project.csprojResolveAssemblyReference.cache
